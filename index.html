@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forex|Cripto DCA Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: #e5e7eb;
+            padding: 20px;
+        }
+        .box {
+            max-width: 420px;
+            margin: auto;
+            background: #020617;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        h2 {
+            text-align: center;
+            color: #38bdf8;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            border-radius: 5px;
+            border: none;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            background: #22c55e;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .result {
+            margin-top: 15px;
+            background: #020617;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Forex|Cripto DCA Calculator</h2>
+
+    <label>Entry Price</label>
+    <input type="number" id="entryPrice" step="0.0001">
+
+    <label>Position Size (USDT)</label>
+    <input type="number" id="positionSize" step="0.01">
+
+    <label>DCA Price</label>
+    <input type="number" id="dcaPrice" step="0.0001">
+
+    <label>DCA Size (USDT)</label>
+    <input type="number" id="dcaSize" step="0.01">
+
+    <label>Current Price</label>
+    <input type="number" id="currentPrice" step="0.0001">
+
+    <label>Leverage</label>
+    <input type="number" id="leverage" value="10">
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+function calculate() {
+    let entry = parseFloat(entryPrice.value);
+    let size = parseFloat(positionSize.value);
+    let dcaP = parseFloat(dcaPrice.value);
+    let dcaS = parseFloat(dcaSize.value);
+    let current = parseFloat(currentPrice.value);
+    let lev = parseFloat(leverage.value);
+
+    let newAvg = ((entry * size) + (dcaP * dcaS)) / (size + dcaS);
+    let pnl = ((current - newAvg) / newAvg) * lev * 100;
+
+    document.getElementById("result").innerHTML =
+        `<b>New Average Entry:</b> ${newAvg.toFixed(4)}<br>
+         <b>Estimated PNL %:</b> ${pnl.toFixed(2)} %`;
+}
+</script>
+
+</body>
+</html>
